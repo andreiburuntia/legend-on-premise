@@ -1,6 +1,5 @@
 const sql = require("./db.js");
 
-// constructor
 const Punch = function(punch) {
   this.bag_id = punch.bag_id;
   this.score  = punch.score;
@@ -32,11 +31,10 @@ Punch.findByBagId = (bagId, result) => {
 
     if (res.length) {
       console.log("found punch for bag: ", res[0]);
-      result(null, res[0]);
+      result(null, res);
       return;
     }
 
-    // not found Customer with the id
     result({ kind: "not_found" }, null);
   });
 };
@@ -56,7 +54,6 @@ Punch.getExportReadyData = (bagId, result) => {
       return;
     }
 
-    // not found Customer with the id
     result({ kind: "not_found" }, null);
   });
 };
