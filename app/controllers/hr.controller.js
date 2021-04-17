@@ -1,7 +1,8 @@
 const HrModel = require("../models/hr.model.js");
 const axios = require("axios");
+const session = require('express-session');
 
-const AMAZON_API_URL = 'ec2-18-217-1-165.us-east-2.compute.amazonaws.com/hr/bulk';
+const AMAZON_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/hr/bulk';
 
 // Create and Save a new HrModel
 exports.create = (req, res) => {
@@ -12,10 +13,13 @@ exports.create = (req, res) => {
     });
   }
 
+  sessonData = req.session;
+  console.log("SESSION ID is :" + sessionData.currentWorkout.id);
   // Create a HrModel
   const hr = new HrModel({
-	bag_id : req.body.bag_id,
-	hr     : req.body.hr
+	bag_id     : req.body.bag_id,
+	hr         : req.body.hr,
+	workout_id : sessionData.currentWorkout.id
   });
 
   // Save hr in the database

@@ -1,8 +1,9 @@
 const sql = require("./db.js");
 
 const Hr = function(hr) {
-  this.bag_id = hr.bag_id;
-  this.hr     = hr.hr;
+  this.bag_id     = hr.bag_id;
+  this.hr         = hr.hr;
+  this.workout_id = hr.workout_id;
 };
 
 Hr.create = (newhr, result) => {

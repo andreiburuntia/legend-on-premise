@@ -1,9 +1,10 @@
 const sql = require("./db.js");
 
 const Punch = function(punch) {
-  this.bag_id = punch.bag_id;
-  this.score  = punch.score;
-  this.count  = punch.count;
+  this.bag_id     = punch.bag_id;
+  this.score      = punch.score;
+  this.count      = punch.count;
+  this.workout_id = hr.workout_id;
 };
 
 

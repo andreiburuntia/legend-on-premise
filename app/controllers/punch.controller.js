@@ -1,7 +1,7 @@
 const Punch = require("../models/punch.model.js");
 const axios = require("axios");
 
-const AMAZON_API_URL = 'ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk ';
+const AMAZON_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk ';
 
 // Create and Save a new Punch
 exports.create = (req, res) => {
@@ -14,9 +14,10 @@ exports.create = (req, res) => {
 
   // Create a Punch
   const punch = new Punch({
-	bag_id : req.body.bag_id,
-	score  : req.body.score,
-	count  : req.body.count
+	bag_id     : req.body.bag_id,
+	score      : req.body.score,
+	count      : req.body.count,
+	workout_id : sessionData.currentWorkout.id
   });
 
   // Save punch in the database

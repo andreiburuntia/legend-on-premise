@@ -1,7 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require('express-session');
+const random = require("random");
 
 const app = express();
+
+app.use(session({resave: true, saveUninitialized: true, secret: 'qJ0KfGtlJm^$cCH', cookie: { maxAge: 60000 }}));
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
@@ -16,6 +20,7 @@ app.get("/", (req, res) => {
 
 require("./app/routes/punch.routes.js")(app);
 require("./app/routes/hr.routes.js")(app);
+require("./app/routes/workout.routes.js")(app);
 
 // set port, listen for requests
 app.listen(3000, () => {
