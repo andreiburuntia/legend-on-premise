@@ -1,0 +1,194 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    background: rgb(2,0,36);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 98%, rgba(12,9,106,1) 100%);
+    margin: 0 auto;
+    display: flex;
+}
+
+.panel {
+    display: inline-block;
+}
+
+#left-panel {
+    width: 65%;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-right: 50px;
+}
+
+#right-panel {
+    width: 33.3%;
+    height: 100%;
+    flex-direction: row;
+    margin-right: 10px;
+}
+
+.projection-padding {
+    background-color: black;
+    height: 100%;
+    width: 100px;
+}
+
+.left-panel-container {
+    width: 23%;
+    height: 100%;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.inner-column {
+    width: 50%;
+    height: 100%;
+    padding-left: 5px;
+}
+
+#logo-area {
+    width: 100%;
+    height: 40%;
+}
+
+#logo-legend {    
+    display: block;
+    margin: auto;
+    margin-top: 70px;
+}
+
+#class-area {
+    width: 100%;
+    height: calc(40%-70px); 
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 60px;
+    color: white;
+    text-align: center;
+    display: block;
+    margin: auto;
+    margin-top: 75px;
+}
+
+.bag {
+    padding-top: 40px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.hor {
+    display: flex;
+    flex-direction: row;
+}
+
+.ver {
+    display: flex;
+    flex-direction: column;
+}
+
+.bag-icon {
+    /*background-image: url('../../images/bag-p.png');
+    background-size: contain;
+    background-repeat: no-repeat;*/
+    width:50%;
+    height:100%;
+}
+
+.bag-icon-border {    
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background-color: greenyellow;
+    margin-left: 25px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.bag-icon-image {
+    background-repeat: no-repeat;
+    background-image: url('../../images/bag-p.png');
+    width: 63px;
+    height: 63px;
+    margin-top: 6px;
+}
+
+.bag-text {
+    width:50%;
+    height:100%;
+}
+
+.nickname {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color:white;    
+    font-size: 1.5em;
+}
+
+.score-container {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color:white;
+    display: flex;
+    flex-direction: row;
+}
+
+.hr-container {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color:white;
+    display: flex;
+    flex-direction: row;
+}
+
+.count-container {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color:white;
+    display: flex;
+    flex-direction: row;
+}
+
+.score {
+    font: inherit;
+    color: orange;
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.count {
+    font: inherit;
+    color: orange;
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+
+.hr {
+    font: inherit;
+    color: orange;
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+#vid {
+    outline: none;   
+}
+}
