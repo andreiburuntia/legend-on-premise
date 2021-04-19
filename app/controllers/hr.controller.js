@@ -14,7 +14,6 @@ exports.create = (req, res) => {
   }
 
   sessonData = req.session;
-  console.log("SESSION ID is :" + sessionData.currentWorkout.id);
   // Create a HrModel
   const hr = new HrModel({
 	bag_id     : req.body.bag_id,

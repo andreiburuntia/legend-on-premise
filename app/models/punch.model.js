@@ -72,4 +72,19 @@ Punch.removeAll = result => {
   });
 };
 
+Punch.getProjectorReadyData = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`SELECT bag_id, score, count, created_at FROM punches GROUP BY bag_id ORDER BY created_at DESC;`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      reject(err);
+    }
+
+    resolve(res);
+  });
+  });
+};
+
+
 module.exports = Punch;

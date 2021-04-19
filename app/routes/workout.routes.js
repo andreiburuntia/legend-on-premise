@@ -7,4 +7,7 @@ module.exports = app => {
   // Stop a workout
   app.get("/workout/finish", workouts.finish);
 
+  // Get workout projector data
+  app.get("/workout/projector", workouts.getProjectorData);
+
 };

@@ -69,4 +69,18 @@ Hr.removeAll = result => {
   });
 };
 
+Hr.getProjectorReadyData = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`SELECT  bag_id, hr, created_at FROM hrs GROUP BY bag_id ORDER BY created_at DESC;`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        reject(err);
+      }
+
+      resolve(res);
+
+    });
+  });
+};
+
 module.exports = Hr;

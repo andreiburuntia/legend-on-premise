@@ -1,5 +1,6 @@
 const Punch = require("../models/punch.model.js");
 const axios = require("axios");
+const session = require('express-session');
 
 const AMAZON_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk ';
 
@@ -11,6 +12,8 @@ exports.create = (req, res) => {
       message: "Content can not be empty!"
     });
   }
+
+  sessonData = req.session;
 
   // Create a Punch
   const punch = new Punch({
