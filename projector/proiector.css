@@ -199,4 +199,8 @@ body {
 #vid {
     outline: none;   
 }
+
+
+.grayout {
+    filter: grayscale(100%);
 }

@@ -78,6 +78,9 @@ setInterval(function()
             i=0;
             for(const element of data) {
                 var bagId = 'bag-' + element['bag_id'];
+                
+                $('#'+bagId).removeClass( "grayout" );
+
                 $('#'+bagId).find('.score').text(element['score']);
                 //$('#'+bagId).find('.score').text('0');
                 $('#'+bagId).find('.hr').text(element['hr']);
