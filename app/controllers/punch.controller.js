@@ -12,14 +12,13 @@ exports.create = (req, res) => {
     });
   }
   
-  console.log(global.currentWorkout);
-
   // Create a Punch
   const punch = new Punch({
 	bag_id     : req.body.bag_id,
 	score      : req.body.score,
 	count      : req.body.count,
-	workout_id : global.currentWorkout
+	workout_id : global.currentWorkout,
+	user_id    : global.connectedUsers.get(req.body.bag_id)
   });
 
   // Save punch in the database

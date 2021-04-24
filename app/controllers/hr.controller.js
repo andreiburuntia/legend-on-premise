@@ -18,7 +18,8 @@ exports.create = (req, res) => {
   const hr = new HrModel({
 	bag_id     : req.body.bag_id,
 	hr         : req.body.hr,
-	workout_id : global.currentWorkout
+	workout_id : global.currentWorkout,
+	user_id    : global.connectedUsers.get(req.body.bag_id)
   });
 
   // Save hr in the database

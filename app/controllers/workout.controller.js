@@ -16,9 +16,9 @@ exports.getCurrentWorkout = (req, res) => {
         .then(result => {
             global.connectedUsers = new Map();
             result.data.forEach((element => {
-              global.connectedUsers.set(element[0], element[1].id);
               console.log("Element 0: " + element[0]);
               console.log("Element 1: " + element[1].id);
+              global.connectedUsers.set(element[0], element[1].id);
             }));
             console.log('Map');
             console.log(global.connectedUsers);
