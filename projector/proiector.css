@@ -12,8 +12,8 @@ body {
 #container {
     width: 100%;
     height: 100%;
-    background: rgb(2,0,36);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 98%, rgba(12,9,106,1) 100%);
+    background: rgb(35,31,32);
+    /*background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 98%, rgba(12,9,106,1) 100%);*/
     margin: 0 auto;
     display: flex;
 }
@@ -23,13 +23,12 @@ body {
 }
 
 #left-panel {
-    width: 65%;
-    height: 100%;
-    max-height: 100%;
     display: flex;
-    flex-direction: row;
-    flex: 1;
-    margin-right: 50px;
+    flex-flow: row wrap;
+    width: 65%;    
+    max-height: 100%;
+    flex: 10;
+    margin-right: 25px;
 }
 
 #right-panel {
@@ -39,103 +38,86 @@ body {
     margin-right: 10px;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
 .projection-padding {
     background-color: black;
     height: 100%;
     width: 100px;
 }
 
-.left-panel-container {
-    width: 23%;
-    height: 100%;
-    margin-left: 50px;
-    display: flex;
-    flex-direction: row;
-}
-
-.inner-column {
-    width: 50%;
-    height: 100%;
-    padding-left: 5px;
-}
-
 #logo-area {
-    width: 100%;
-    height: 40%;
+    justify-content: left;
 }
 
 #logo-legend {    
     display: block;
-    margin: auto;
-    margin-top: 70px;
+    width:250px;
+    padding:left:50px;
+    margin-top: 10px;
 }
 
 #class-area {
-    width: 100%;
+/*    width: 100%;
     height: calc(40%-70px); 
-    font-family: "Montserrat", sans-serif;
+*/    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 60px;
     color: white;
     text-align: center;
     display: block;
     margin: auto;
-    margin-top: 75px;
+    /*margin-top: 75px;*/
+}
+
+#time-container {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 80px;
+    color: white;
+    display: block;
+    /*margin: auto;*/
+    /*margin-top: 75px;*/
+    justify-content: right;
+
+}
+
+#time {
+    text-align: right;
 }
 
 .bag {
-    padding-top: 40px;
-    width: 100%;
-    margin-top: 20px;
-}
-
-.hor {
-    display: flex;
-    flex-direction: row;
-}
-
-.ver {
     display: flex;
     flex-direction: column;
-}
-
-.bag-icon {
-    /*background-image: url('../../images/bag-p.png');
-    background-size: contain;
-    background-repeat: no-repeat;*/
-    width:50%;
-    height:100%;
-}
-
-.bag-icon-border {    
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    background-color: greenyellow;
-    margin-left: 25px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.bag-icon-image {
-    background-repeat: no-repeat;
-    background-image: url('../../images/bag-p.png');
-    width: 63px;
-    height: 63px;
-    margin-top: 6px;
-}
-
-.bag-text {
-    width:50%;
-    height:100%;
+    flex-basis: 100%;
+    flex: 1;    
+    /*padding-top: 40px;*/
+    width: 100%;
+    /*margin-top: 20px;*/
+    margin:10px 10px 0px 10px;
+    padding:10px 10px 0px 10px;
+    border: 2px solid rgb(242, 99, 34);
+    border-radius: 10px;
 }
 
 .nickname {
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color:white;    
-    font-size: 1.5em;
+    font-size: 42px;
+    text-align: center;
 }
 
 .score-container {
@@ -162,26 +144,53 @@ body {
     flex-direction: row;
 }
 
+.cal-container {
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    color:white;
+    display: flex;
+    flex-direction: row;
+}
+
 .score {
     font: inherit;
-    color: orange;
-    padding-right: 10px;
+    font-size: 42px;
+    color: rgb(242,99,34);
+/*    padding-right: 10px;
     padding-left: 5px;
+*/
+    padding-left: 10px;
 }
 
 .count {
     font: inherit;
-    color: orange;
-    padding-right: 10px;
+    font-size: 42px;
+    color: rgb(242,99,34);
+/*    padding-right: 10px;
     padding-left: 5px;
+*/
+    padding-left: 10px;
 }
 
 
 .hr {
     font: inherit;
-    color: orange;
-    padding-right: 10px;
+    font-size: 42px;
+    color: rgb(242,99,34);
+/*    padding-right: 10px;
     padding-left: 5px;
+*/
+    padding-left: 10px;
+}
+
+.cal {
+    font: inherit;
+    font-size: 42px;
+    color: rgb(242,99,34);
+/*    padding-right: 10px;
+    padding-left: 5px;
+*/
+    padding-left: 10px;
 }
 
 .hide {

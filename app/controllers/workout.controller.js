@@ -1,21 +1,24 @@
 const axios = require("axios");
-const session = require('express-session');
 const HrModel = require("../models/hr.model.js");
 const PunchModel = require("../models/punch.model.js");
 
 const AMAZON_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/workout/upcoming';
 
-
 exports.getCurrentWorkout = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+
     axios
         .get(AMAZON_API_URL)
-        .then(res => {
-            console.log(res)
-            sessionData = req.session;
-            sessionData.currentWorkout = res.data
+        .then(result => {
+            console.log(result);
+            global.currentWorkout = result.data.id;
+
+            res.status(200).json(result.data);
+
         })
         .catch(error => {
             console.error(error)
+            res.status(200).json(error);
         })  
 };
 
@@ -34,6 +37,8 @@ exports.finish = (req, res) => {
 
 exports.getProjectorData = (req, res) => {
     
+    res.header("Access-Control-Allow-Origin", "*");
+
     Promise.all([
         HrModel.getProjectorReadyData(),
         PunchModel.getProjectorReadyData(),
@@ -58,7 +63,7 @@ exports.getProjectorData = (req, res) => {
               'count': r.count ?? null
             })).sort((a, b) => (a.bag_id > b.bag_id) ? 1 : -1);
 
-            
+
             res.status(200).json(result);
         })
         .catch(err => console.log(err));

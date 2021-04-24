@@ -9,6 +9,17 @@ fc_list.reduce((a, b) => a + b, 0)/60
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
+    // add fetching of current workout in order to be saved to db later
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/workout/start",        
+        success:function(data)
+        {
+            console.log(data);
+        }
+    });
+
+
     refreshId = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
@@ -60,29 +71,23 @@ setInterval(function()
 {
     $.ajax({
         type: "get",
-        url: "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/proiector",
+        //url: "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/proiector",
+        url: "http://localhost:3000/workout/projector",        
         success:function(data)
         {
-            // console.log the response
-            //console.log(data);
-            //console.log(data)
-            let resp = data.replace(/\'/g, '\"');
-            //console.log(resp);
-            var array = JSON.parse(resp);
-            //console.log(array);
-            names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20']
-            i=0
-            for(const element of array) {
+            i=0;
+            for(const element of data) {
                 var bagId = 'bag-' + element['bag_id'];
                 $('#'+bagId).find('.score').text(element['score']);
                 //$('#'+bagId).find('.score').text('0');
                 $('#'+bagId).find('.hr').text(element['hr']);
                 $('#'+bagId).find('.count').text(element['count']);
+                $('#'+bagId).find('.cal').text(element['count']);
                 //$('#'+bagId).find('.count').text('0');
-                $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
-                $('#'+bagId).find('.nickname').text(names[i]);
+                // $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
+                // $('#'+bagId).find('.nickname').text(names[i]);
                 i++;
-                /*if(element['effort'] == 1) {
+                /*if(element['effort'] == 1) {;
                     $('#'+bagId).find('.bag-icon-border').css('background-color', 'greenyellow');
                 }
                 if(element['effort'] == 2) {
@@ -94,4 +99,4 @@ setInterval(function()
             }
         }
     });
-}, 1000);
+}, 10000);
