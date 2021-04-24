@@ -114,10 +114,13 @@ exports.finish = (req, res) => {
         PunchModel.getExportReadyData()
     ])
         .then(([hrData, punchData]) => {
-              
+                
+          console.log(hrData);
+          console.log(punchData);
+
           Promise.all([
-            sendHrsToAmazon(), 
-            sendPunchesToAmazon()
+            sendHrsToAmazon(hrData), 
+            sendPunchesToAmazon(punchData)
           ])
           .then(function (results) {
 
