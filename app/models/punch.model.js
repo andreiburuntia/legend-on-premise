@@ -5,6 +5,7 @@ const Punch = function(punch) {
   this.score      = punch.score;
   this.count      = punch.count;
   this.workout_id = punch.workout_id;
+  this.user_id    = punch.user_id;
 };
 
 
@@ -40,22 +41,31 @@ Punch.findByBagId = (bagId, result) => {
   });
 };
 
-
-Punch.getExportReadyData = (bagId, result) => {
-  sql.query(`SELECT * FROM punches WHERE bag_id = ${bagId} ORDER BY id DESC LIMIT 1`, (err, res) => {
+Punch.getExportReadyData = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`SELECT user_id, workout_id, bag_id, score, count FROM punches WHERE id IN (SELECT MAX(id) FROM punches GROUP BY bag_id)`, (err, res) => {
     if (err) {
       console.log("error: ", err);
-      result(err, null);
-      return;
+      result(null, err);
+      reject(err);
     }
 
-    if (res.length) {
-      console.log("found punch for bag: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
+    resolve(res);
+  });
+  });
+};
 
-    result({ kind: "not_found" }, null);
+Punch.moveDataToBackup = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`INSERT INTO punches_storage (bag_id, workout_id, score, count, created_at, user_id) SELECT bag_id, workout_id, score, count, created_at, user_id FROM punches`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        reject(err);
+      }
+
+      resolve(res);
+
+    });
   });
 };
 

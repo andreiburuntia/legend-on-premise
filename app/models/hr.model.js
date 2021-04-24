@@ -3,6 +3,7 @@ const sql = require("./db.js");
 const Hr = function(hr) {
   this.bag_id     = hr.bag_id;
   this.hr         = hr.hr;
+  this.user_id    = hr.user_id;
   this.workout_id = hr.workout_id;
 };
 
@@ -38,21 +39,31 @@ Hr.findByBagId = (bagId, result) => {
   });
 };
 
-Hr.getExportReadyData = (bagId, result) => {
-  sql.query(`SELECT bag_id, min(hr) as "min", max(hr) as "max", ROUND(avg(hr)) as "avg" FROM hrs WHERE bag_id = ${bagId} GROUP BY bag_id`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
+Hr.getExportReadyData = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`SELECT user_id, workout_id, bag_id, min(hr) as "min", max(hr) as "max", ROUND(avg(hr)) as "avg" FROM hrs GROUP BY bag_id;`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        reject(err);
+      }
 
-    if (res.length) {
-      console.log("found hr for bag: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
+      resolve(res);
 
-    result({ kind: "not_found" }, null);
+    });
+  });
+};
+
+Hr.moveDataToBackup = result => {
+  return new Promise((resolve, reject) => {
+    sql.query(`INSERT INTO hrs_storage (bag_id, workout_id, hr, created_at, user_id) SELECT bag_id, workout_id, hr, created_at, user_id FROM hrs`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        reject(err);
+      }
+
+      resolve(res);
+
+    });
   });
 };
 
@@ -68,6 +79,7 @@ Hr.removeAll = result => {
     result(null, res);
   });
 };
+
 
 Hr.getProjectorReadyData = result => {
   return new Promise((resolve, reject) => {
