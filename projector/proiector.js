@@ -1,6 +1,9 @@
 // timers in secodns for each trainig type
+//BIT
 var bit_list = [300, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 420]
+//BOX
 var box_list = [600, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 480]
+//S&C
 var fc_list = [600, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 420]
 
 var used_list = fc_list;
@@ -17,6 +20,18 @@ function startTimer(duration, display) {
         success:function(data)
         {
             console.log(data);
+            if(data.w_type =="BOX") {
+                $("class-area"). text("BOX");
+                used_list = box_list;
+            }
+            if(data.w_type =="BIT") {
+                $("class-area"). text("BOXING INTERVAL TRAINING");
+                used_list = bit_list;
+            }
+            if(data.w_type =="S&C") {
+                $("class-area"). text("FIGHT CONDITIONING");
+                used_list = fc_list;                
+            }
         }
     });
 
