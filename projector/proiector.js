@@ -1,3 +1,4 @@
+// timers in secodns for each trainig type
 var bit_list = [300, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 420]
 var box_list = [600, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 480]
 var fc_list = [600, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 420]
@@ -32,13 +33,23 @@ function startTimer(duration, display) {
         if (--timer < 0) {
             cnt += 1;
             console.log(cnt);
-            //display.style.display = 'none';
+            //display.style.display = 'none'; 
             clearInterval(refreshId);
             console.log(used_list[cnt])
             if(cnt < used_list.length - 1)
                 startTimer(used_list[cnt]-1, document.querySelector('#time'));
-            else
+            else {
+                // add fetching of current workout in order to be saved to db later
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:3000/workout/finish",        
+                    success:function(data)
+                    {
+                        console.log(data);
+                    }
+                });                             
                 document.querySelector('#time').innerHTML = "WELL DONE!";
+            }
         }
     }, 1000);
 }
@@ -84,7 +95,7 @@ setInterval(function()
                 $('#'+bagId).find('.score').text(element['score']);
                 //$('#'+bagId).find('.score').text('0');
                 $('#'+bagId).find('.hr').text(element['hr']);
-                $('#'+bagId).find('.count').text(element['count']);
+                //$('#'+bagId).find('.count').text(element['count']);
                 $('#'+bagId).find('.cal').text(element['count']);
                 //$('#'+bagId).find('.count').text('0');
                 // $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
