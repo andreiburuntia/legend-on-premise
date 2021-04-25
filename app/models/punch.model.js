@@ -84,7 +84,7 @@ Punch.removeAll = result => {
 
 Punch.getProjectorReadyData = result => {
   return new Promise((resolve, reject) => {
-    sql.query(`SELECT bag_id, score, count, created_at FROM punches GROUP BY bag_id ORDER BY created_at DESC;`, (err, res) => {
+    sql.query(`SELECT p.id, p.bag_id, p.score, p.count, p.created_at FROM punches p INNER JOIN (SELECT MAX(id) AS id FROM punches GROUP BY bag_id) AS grouper ON p.id=grouper.id;`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

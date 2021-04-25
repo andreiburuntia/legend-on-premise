@@ -83,7 +83,7 @@ Hr.removeAll = result => {
 
 Hr.getProjectorReadyData = result => {
   return new Promise((resolve, reject) => {
-    sql.query(`SELECT  bag_id, hr, created_at FROM hrs GROUP BY bag_id ORDER BY created_at DESC;`, (err, res) => {
+    sql.query(`SELECT hr.id, hr.bag_id, hr.hr, hr.created_at FROM hrs hr INNER JOIN (SELECT MAX(id) AS id FROM hrs GROUP BY bag_id) AS grouper ON hr.id=grouper.id;`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         reject(err);
