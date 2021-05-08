@@ -106,6 +106,8 @@ function sendPunchesToAmazon(punchData) {
 
 exports.finish = (req, res) => {
     
+    res.header("Access-Control-Allow-Origin", "*");
+    
     //clear connected users global array
     global.connectedUsers.clear();
 

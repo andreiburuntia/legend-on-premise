@@ -28,6 +28,7 @@ body {
     max-height: 100%;
     flex: 10;
     margin-right: 25px;
+    margin-bottom: 20px;
 }
 
 #right-panel {
@@ -59,6 +60,7 @@ body {
 
 #logo-area {
     justify-content: left;
+    margin:10px 0px 0px 10px;
 }
 
 #logo-legend {    
@@ -68,7 +70,13 @@ body {
     margin-top: 10px;
 }
 
+/*:root {
+}
+*/
 #class-area {
+  --shadow-color: #FF0000;
+  --shadow-color-light: white;
+
 /*    width: 100%;
     height: calc(40%-70px); 
 */    font-family: "Montserrat", sans-serif;
@@ -79,6 +87,41 @@ body {
     display: block;
     margin: auto;
     /*margin-top: 75px;*/
+    animation: neon 5s infinite;
+}
+
+
+@keyframes neon {
+  0% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+  }
+  50% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 5px var(--shadow-color-light), 0 0 15px var(--shadow-color-light), 0 0 25px var(--shadow-color-light),
+    0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 60px var(--shadow-color), 0 0 80px var(--shadow-color), 0 0 110px var(--shadow-color), 0 0 210px var(--shadow-color);
+  }
+  100% {
+    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
+    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
+    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
+  }
+}
+
+
+#motivational-quote {
+  --shadow-color: #0000FF;
+  --shadow-color-light: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 80px;
+    color: white;
+    text-align: center;
+    display: block;
+    
+    margin-top: 250px;
+    animation: neon 5s infinite;
 }
 
 #time-container {
@@ -95,6 +138,7 @@ body {
 
 #time {
     text-align: right;
+    cursor:pointer;
 }
 
 .bag {

@@ -6,36 +6,28 @@ var box_list = [600, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 180, 60, 1
 //S&C
 var fc_list = [600, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 120, 420]
 
-var used_list = fc_list;
+var quotes_list = [
+    "PUSH YOURSELF BECAUSE NO ONE IS GOING TO DO IT FOR YOU<br>🔥",
+    "HEROES COME AND GO, LEGENDS ARE FOREEVER<br>🙌",
+    "FEARLESS & FABULOUS<br>🦁🤩",
+    "FIGHT LIKE A GIRL<br>👗",
+    "CONFIDENCE HAS NO COMPETITION<br>💪🏻",
+    "I'M HERE TO KICK ASS AND CHEW BUBBLEGUM AND I'M ALL OUT OF BUBBLEGUM<br>🎀"
+];
+
+var used_list = [];
 var cnt = 0;
 
-fc_list.reduce((a, b) => a + b, 0)/60
+var stopperTimeout;
 
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
+bit_list.reduce((a, b) => a + b, 0)/60;
+box_list.reduce((a, b) => a + b, 0)/60;
+fc_list.reduce((a, b) => a + b, 0)/60;
+
+function startTimer() {
     // add fetching of current workout in order to be saved to db later
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:3000/workout/start",        
-        success:function(data)
-        {
-            console.log(data);
-            if(data.w_type =="BOX") {
-                $("class-area"). text("BOX");
-                used_list = box_list;
-            }
-            if(data.w_type =="BIT") {
-                $("class-area"). text("BOXING INTERVAL TRAINING");
-                used_list = bit_list;
-            }
-            if(data.w_type =="S&C") {
-                $("class-area"). text("FIGHT CONDITIONING");
-                used_list = fc_list;                
-            }
-        }
-    });
-
-
+    var timer = (used_list[cnt]-1), minutes, seconds;
+    
     refreshId = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
@@ -43,16 +35,17 @@ function startTimer(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+        $('#time').html ( minutes + ":" + seconds);
 
         if (--timer < 0) {
             cnt += 1;
-            console.log(cnt);
-            //display.style.display = 'none'; 
+            console.log("Count:" + cnt);
             clearInterval(refreshId);
-            console.log(used_list[cnt])
-            if(cnt < used_list.length - 1)
-                startTimer(used_list[cnt]-1, document.querySelector('#time'));
+            console.log("Interval value:" + used_list[cnt])
+            if(cnt < used_list.length - 1){
+                startTimer();
+                $('#motivational-quote').html(quotes_list[Math.floor(Math.random() * quotes_list.length)]);
+            }
             else {
                 // add fetching of current workout in order to be saved to db later
                 $.ajax({
@@ -63,69 +56,99 @@ function startTimer(duration, display) {
                         console.log(data);
                     }
                 });                             
-                document.querySelector('#time').innerHTML = "WELL DONE!";
+                $('#time').html("WELL DONE!");
+
+                stopperTimeout = setTimeout(function(){stopProjectorFetching(); }, 300000);
+
             }
         }
     }, 1000);
+
 }
 
-window.onload = function () {
-    document.querySelector('#time').innerHTML = "START";
-};
+function stopProjectorFetching() {
+    console.log('Kill projector fetcher');
+    clearInterval(projectorRefreshInterval)    
+    clearTimeout(stopperTimeout);
+}
 
-document.querySelector('#time').onclick = function () {
-    console.log('CLICKED');
-    var fiveMinutes = used_list[0]-1,//120 * 10,
-    display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
-    
-    
-    const Http = new XMLHttpRequest();
-    const url='http://localhost:4800/play?p=pass';
-    Http.open("GET", url);
-    Http.send();
-    
-    Http.onreadystatechange = (e) => {
-      console.log(Http.responseText)
-    }
-    
-    
-    document.getElementById('vid').play();
-};
+$(document).ready(function() {
+    $('#motivational-quote').html(quotes_list[Math.floor(Math.random() * quotes_list.length)]);
 
-setInterval(function()
-{
+    $('#time').html("START");
+
+    $('#time').click(function() {
+
     $.ajax({
-        type: "get",
-        //url: "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/proiector",
-        url: "http://localhost:3000/workout/projector",        
+        type: "GET",
+        url: "http://localhost:3000/workout/start",        
         success:function(data)
         {
-            i=0;
-            for(const element of data) {
-                var bagId = 'bag-' + element['bag_id'];
-                
-                $('#'+bagId).removeClass( "grayout" );
-
-                $('#'+bagId).find('.score').text(element['score']);
-                //$('#'+bagId).find('.score').text('0');
-                $('#'+bagId).find('.hr').text(element['hr']);
-                //$('#'+bagId).find('.count').text(element['count']);
-                $('#'+bagId).find('.cal').text(element['count']);
-                //$('#'+bagId).find('.count').text('0');
-                // $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
-                // $('#'+bagId).find('.nickname').text(names[i]);
-                i++;
-                /*if(element['effort'] == 1) {;
-                    $('#'+bagId).find('.bag-icon-border').css('background-color', 'greenyellow');
-                }
-                if(element['effort'] == 2) {
-                    $('#'+bagId).find('.bag-icon-border').css('background-color', 'yellow');
-                }
-                if(element['effort'] == 3) {
-                    $('#'+bagId).find('.bag-icon-border').css('background-color', 'red');
-                }*/
+            console.log('Workout start');
+            if(data.w_type == "BOX") {
+                $("#class-area"). text("BOX");
+                used_list = box_list;
             }
+            if(data.w_type == "BIT") {
+                $("#class-area"). text("BOXING INTERVAL TRAINING");
+                used_list = bit_list;
+            }
+            if(data.w_type == "S&C") {
+                $("#class-area"). text("FIGHT CONDITIONING");
+                used_list = fc_list;                
+            }
+
+        startTimer();
         }
     });
-}, 1500);
+
+                
+        const Http = new XMLHttpRequest();
+        const url='http://localhost:4800/play?p=pass';
+        Http.open("GET", url);
+        Http.send();
+        
+        Http.onreadystatechange = (e) => {
+          console.log(Http.responseText)
+        }
+        
+        //$('#vid').get(0).play();
+    });
+
+    projectorRefreshInterval = setInterval(function()
+    {
+        $.ajax({
+            type: "get",
+            //url: "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/proiector",
+            url: "http://localhost:3000/workout/projector",        
+            success:function(data)
+            {
+                i=0;
+                for(const element of data) {
+                    var bagId = 'bag-' + element['bag_id'];
+                    
+                    $('#'+bagId).removeClass( "grayout" );
+
+                    $('#'+bagId).find('.score').text(element['score']);
+                    //$('#'+bagId).find('.score').text('0');
+                    $('#'+bagId).find('.hr').text(element['hr']);
+                    //$('#'+bagId).find('.count').text(element['count']);
+                    $('#'+bagId).find('.cal').text(element['count']);
+                    //$('#'+bagId).find('.count').text('0');
+                    // $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
+                    // $('#'+bagId).find('.nickname').text(names[i]);
+                    i++;
+                    /*if(element['effort'] == 1) {;
+                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'greenyellow');
+                    }
+                    if(element['effort'] == 2) {
+                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'yellow');
+                    }
+                    if(element['effort'] == 3) {
+                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'red');
+                    }*/
+                }
+            }
+        });
+    }, 1000);
+});
