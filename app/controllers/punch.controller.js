@@ -17,7 +17,7 @@ exports.create = (req, res) => {
 	bag_id     : req.body.bag_id,
 	score      : req.body.score,
 	count      : req.body.count,
-	workout_id : global.currentWorkout,
+	workout_id : global.currentWorkout.id,
 	user_id    : global.connectedUsers.get(req.body.bag_id)
   });
 

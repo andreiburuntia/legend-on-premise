@@ -2,42 +2,12 @@ const axios = require("axios");
 const HrModel = require("../models/hr.model.js");
 const PunchModel = require("../models/punch.model.js");
 
-const AMAZON_WORKOUT_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/workout/upcoming';
-const AMAZON_CONNECTED_USERS_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/connected-users';
-
 const AMAZON_HR_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/hr/bulk';
 const AMAZON_PUNCH_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk';
  
-exports.getCurrentWorkout = (req, res) => {
+exports.start = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-
-    axios
-        .get(AMAZON_CONNECTED_USERS_API_URL)
-        .then(result => {
-            global.connectedUsers = new Map();
-            result.data.forEach((element => {
-              console.log("Element 0: " + element[0]);
-              console.log("Element 1: " + element[1].id);
-              global.connectedUsers.set(element[0], element[1].id);
-            }));
-            console.log('Map');
-            console.log(global.connectedUsers);
-        })
-        .catch(error => {
-            console.error(error)            
-        });
-
-    axios
-        .get(AMAZON_WORKOUT_API_URL)
-        .then(result => {
-            global.currentWorkout = result.data.id;
-            res.status(200).json(result.data);
-
-        })
-        .catch(error => {
-            console.error(error)
-            res.status(200).json(error);
-        });    
+    res.status(200).json(global.currentWorkout);
 };
 
 
