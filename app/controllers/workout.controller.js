@@ -4,13 +4,14 @@ const PunchModel = require("../models/punch.model.js");
 
 const AMAZON_HR_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/hr/bulk';
 const AMAZON_PUNCH_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk';
- 
+
+
+const AMAZON_END_WORKOUT_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/end_workout'; 
+
 exports.start = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.status(200).json(global.currentWorkout);
 };
-
-
 
 exports.getProjectorData = (req, res) => {
     
@@ -111,6 +112,16 @@ exports.finish = (req, res) => {
                       if (err) console.log("Some error occurred while removing all customers.");
                       else console.log({ message: `All punches were deleted successfully!` });
                     });
+
+                  // disconnect all users
+                  axios.get(AMAZON_END_WORKOUT_API_URL)
+                    .then(function (response) {
+                      console.log('Finishing Workout..clearing users');
+                      console.log(response);
+                    })
+                    .catch(function (error) {
+                      console.log(error);
+                    });         
 
                   res.status(200).json('Workout finished successfully');
                 })

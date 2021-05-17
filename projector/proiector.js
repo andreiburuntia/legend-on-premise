@@ -8,7 +8,7 @@ var fc_list = [600, 60, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 
 
 var quotes_list = [
     "PUSH YOURSELF BECAUSE NO ONE IS GOING TO DO IT FOR YOU<br>🔥",
-    "HEROES COME AND GO, LEGENDS ARE FOREEVER<br>🙌",
+    "HEROES COME AND GO, LEGENDS ARE FOREVER<br>🙌",
     "FEARLESS & FABULOUS<br>🦁🤩",
     "FIGHT LIKE A GIRL<br>👗",
     "CONFIDENCE HAS NO COMPETITION<br>💪🏻",
