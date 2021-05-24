@@ -74,45 +74,31 @@ body {
 }
 */
 #class-area {
-  --shadow-color: #FF0000;
-  --shadow-color-light: white;
-
-/*    width: 100%;
-    height: calc(40%-70px); 
-*/    font-family: "Montserrat", sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 60px;
     color: white;
     text-align: center;
     display: block;
     margin: auto;
-    /*margin-top: 75px;*/
-    animation: neon 5s infinite;
+    text-shadow: 
+        -1px -1px 1px #FFFFFF, 
+        -1px 1px 1px #FFFFFF, 
+        1px -1px 1px #FFFFFF, 
+        1px 1px 1px #FFFFFF,
+        0 0 3px #FFFFFF, 
+        0 0 10px #FFFFFF, 
+        0 0 20px #FFFFFF,
+        0 0 30px #FF0000, 
+        0 0 40px #FF0000, 
+        0 0 50px #FF0000, 
+        0 0 70px #FF0000, 
+        0 0 100px #FF0000, 
+        0 0 200px #FF0000;
+
 }
-
-
-@keyframes neon {
-  0% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
-    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
-  }
-  50% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 5px var(--shadow-color-light), 0 0 15px var(--shadow-color-light), 0 0 25px var(--shadow-color-light),
-    0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 60px var(--shadow-color), 0 0 80px var(--shadow-color), 0 0 110px var(--shadow-color), 0 0 210px var(--shadow-color);
-  }
-  100% {
-    text-shadow: -1px -1px 1px var(--shadow-color-light), -1px 1px 1px var(--shadow-color-light), 1px -1px 1px var(--shadow-color-light), 1px 1px 1px var(--shadow-color-light),
-    0 0 3px var(--shadow-color-light), 0 0 10px var(--shadow-color-light), 0 0 20px var(--shadow-color-light),
-    0 0 30px var(--shadow-color), 0 0 40px var(--shadow-color), 0 0 50px var(--shadow-color), 0 0 70px var(--shadow-color), 0 0 100px var(--shadow-color), 0 0 200px var(--shadow-color);
-  }
-}
-
 
 #motivational-quote {
-  --shadow-color: #0000FF;
-  --shadow-color-light: white;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 80px;
@@ -121,7 +107,20 @@ body {
     display: block;
     
     margin-top: 250px;
-    animation: neon 5s infinite;
+    text-shadow: 
+        -1px -1px 1px #FFFFFF, 
+        -1px 1px 1px #FFFFFF, 
+        1px -1px 1px #FFFFFF, 
+        1px 1px 1px #FFFFFF,
+        0 0 3px #FFFFFF, 
+        0 0 10px #FFFFFF, 
+        0 0 20px #FFFFFF,
+        0 0 30px #0000FF, 
+        0 0 40px #0000FF, 
+        0 0 50px #0000FF, 
+        0 0 70px #0000FF, 
+        0 0 100px #0000FF, 
+        0 0 200px #0000FF;
 }
 
 #time-container {
@@ -130,8 +129,6 @@ body {
     font-size: 80px;
     color: white;
     display: block;
-    /*margin: auto;*/
-    /*margin-top: 75px;*/
     justify-content: right;
 
 }
@@ -249,3 +246,95 @@ body {
 .grayout {
     filter: grayscale(100%);
 }
+
+
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 2;
+  cursor: pointer;
+}
+
+
+#chooseWorkout{
+  /*text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;*/
+  text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #ffffff,
+      0 0 80px #ffffff,
+      0 0 90px #ffffff,
+      0 0 100px #ffffff,
+      0 0 150px #ffffff;
+
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 75px;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+.content {
+   max-width: 1024px;
+   width: 100%;
+   padding: 0 4%;
+   padding-top: 250px;
+   margin: 0 auto;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.card {
+   height: 400px;
+   min-height: 400px;
+   width:300px;
+   background-color: #292929;
+   margin: 10px;
+   border-radius: 10px;
+   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
+   border: 2px solid rgba(7, 7, 7, 0.12);
+   font-size: 20px;   
+   font-family: "Montserrat", sans-serif;
+   transition: all 0.3s ease;
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+
+.card img {
+   position:relative;
+   top:10px;
+   margin: 0 auto;
+}
+
+.card:hover {
+    box-shadow: 0 0 20px 20px #FF0000;
+}
+
+.card .title {
+   margin: 0;
+   text-align: center;
+   margin-top: 20px;
+   color: white;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 4px;
+   white-space:break-spaces;
+}
+

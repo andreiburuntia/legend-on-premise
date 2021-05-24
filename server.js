@@ -8,7 +8,6 @@ const CFonts = require('cfonts');
 const app = express();
 
 const AMAZON_CONNECTED_USERS_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/connected-users';
-const AMAZON_WORKOUT_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/workout/upcoming';
 
 const log = console.log;
 const error = chalk.bold.red;
@@ -31,7 +30,8 @@ require("./app/routes/punch.routes.js")(app);
 require("./app/routes/hr.routes.js")(app);
 require("./app/routes/workout.routes.js")(app);
 
-
+global.connectedUsers = new Map();
+global.dailyWorkoutList = new Map();
 // set port, listen for requests
 app.listen(3000, () => {
   CFonts.say('LegendAPI v.0.0.1',{
@@ -57,8 +57,7 @@ let get_connected_users_timeout = (() => {
   log(info('fetching connected users . . .'));
   axios
     .get(AMAZON_CONNECTED_USERS_API_URL)
-    .then(result => {
-        global.connectedUsers = new Map();
+    .then(result => {        
         result.data.forEach((element => {
     	  console.log('elemnt is:' + element);
           global.connectedUsers.set(element[0], element[1].id);
@@ -69,19 +68,6 @@ let get_connected_users_timeout = (() => {
     .catch(error => {
     	log(error('Error fetching connected users . . .\n'+error));
     });
-
-  log('----------------------------------------------------------------------');
-  log(info('fetching current workout . . .'));
-    axios
-        .get(AMAZON_WORKOUT_API_URL)
-        .then(result => {
-            global.currentWorkout = result.data;
-            log(ginfo('Current workout is:\n '));
-            console.log(global.currentWorkout);
-        })
-        .catch(error => {
-            log(error('Error fetching curent workout  . . .\n'+error));
-        });    
 
   setTimeout(() => { 
     get_connected_users_timeout()

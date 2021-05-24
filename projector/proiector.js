@@ -39,9 +39,7 @@ function startTimer() {
 
         if (--timer < 0) {
             cnt += 1;
-            console.log("Count:" + cnt);
             clearInterval(refreshId);
-            console.log("Interval value:" + used_list[cnt])
             if(cnt < used_list.length - 1){
                 startTimer();
                 $('#motivational-quote').html(quotes_list[Math.floor(Math.random() * quotes_list.length)]);
@@ -72,7 +70,55 @@ function stopProjectorFetching() {
     clearTimeout(stopperTimeout);
 }
 
+function closeOverlay() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function openOverlay() {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:3000/workout/daily-workout-list",        
+        success:function(data)
+        {
+
+            document.getElementById("overlay").style.display = "block";
+            if(data.length==0) {
+                $('#chooseWorkout').text('No workout available for today');
+            }
+            $.each(data, function(k, workout) {
+                workoutStartDate = new Date(workout.start_time);                
+                $('#workoutContainer').append(
+                    '<div class="card" onClick="setCurrentWorkout('+ workout.id+')">' +
+                        '<div class="icon">' +
+                            '<img src="images/trainer/'+workout.trainer.toLowerCase()+'.jpg" height="200">' +
+                        '</div>' +
+                        '<p class="title">'+ workout.name+'<br><br>'+new Intl.DateTimeFormat('ro-RO', { dateStyle: 'short', timeStyle: 'short' }).format(workoutStartDate)+'</p>' +
+                    '</div>'
+                );
+            });
+        }
+    });
+}
+
+function setCurrentWorkout(workout_id) {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/workout/set-current-workout",
+        data: { workout_id: workout_id },
+        success:function(data)
+        {
+            console.log('Setting workout with id ' + workout_id + ' as current workout');
+            closeOverlay();
+        }
+    });
+
+}
+
 $(document).ready(function() {
+    
+    openOverlay();
+
     $('#motivational-quote').html(quotes_list[Math.floor(Math.random() * quotes_list.length)]);
 
     $('#time').html("START");
@@ -84,7 +130,6 @@ $(document).ready(function() {
         url: "http://localhost:3000/workout/start",        
         success:function(data)
         {
-            console.log('Workout start');
             if(data.w_type == "BOX") {
                 $("#class-area"). text("BOX");
                 used_list = box_list;
@@ -112,6 +157,7 @@ $(document).ready(function() {
           console.log(Http.responseText)
         }
         
+        // play build workout video
         //$('#vid').get(0).play();
     });
 
@@ -119,7 +165,6 @@ $(document).ready(function() {
     {
         $.ajax({
             type: "get",
-            //url: "http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/proiector",
             url: "http://localhost:3000/workout/projector",        
             success:function(data)
             {
@@ -130,23 +175,10 @@ $(document).ready(function() {
                     $('#'+bagId).removeClass( "grayout" );
 
                     $('#'+bagId).find('.score').text(element['score']);
-                    //$('#'+bagId).find('.score').text('0');
                     $('#'+bagId).find('.hr').text(element['hr']);
-                    //$('#'+bagId).find('.count').text(element['count']);
                     $('#'+bagId).find('.cal').text(element['count']);
-                    //$('#'+bagId).find('.count').text('0');
-                    // $('#'+bagId).find('.nickname').text('USER'+element['bag_id']);
-                    // $('#'+bagId).find('.nickname').text(names[i]);
+
                     i++;
-                    /*if(element['effort'] == 1) {;
-                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'greenyellow');
-                    }
-                    if(element['effort'] == 2) {
-                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'yellow');
-                    }
-                    if(element['effort'] == 3) {
-                        $('#'+bagId).find('.bag-icon-border').css('background-color', 'red');
-                    }*/
                 }
             }
         });

@@ -10,4 +10,10 @@ module.exports = app => {
   // Get workout projector data
   app.get("/workout/projector", workouts.getProjectorData);
 
+  // Get daily workouts
+  app.get("/workout/daily-workout-list", workouts.getDailyWorkouts);
+
+  // Set current workout
+  app.post("/workout/set-current-workout", workouts.setCurrentWorkout);
+
 };

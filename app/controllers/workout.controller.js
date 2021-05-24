@@ -5,8 +5,16 @@ const PunchModel = require("../models/punch.model.js");
 const AMAZON_HR_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/hr/bulk';
 const AMAZON_PUNCH_BULK_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/punch/bulk';
 
-
+const AMAZON_WORKOUT_DETAILS_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/workout/details/';
+const AMAZON_WORKOUT_DAILY_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/workout/day/';
 const AMAZON_END_WORKOUT_API_URL = 'http://ec2-18-217-1-165.us-east-2.compute.amazonaws.com/end_workout'; 
+
+const chalk = require('chalk');
+const log = console.log;
+const error = chalk.bold.red;
+const warning = chalk.keyword('orange');
+const info = chalk.bold.white;
+const ginfo = chalk.bold.green;
 
 exports.start = (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -134,4 +142,36 @@ exports.finish = (req, res) => {
         .catch(err => console.log(err));
 };
 
+exports.setCurrentWorkout = (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*"); 
+    global.currentWorkout = global.dailyWorkoutList.get(parseInt(req.body.workout_id));
+    res.status(200).json(global.currentWorkout);
 
+};
+
+
+exports.getDailyWorkouts = (req, res) => {
+    
+    res.header("Access-Control-Allow-Origin", "*");
+    let today = new Date();
+    // adjust 0 before single digit date
+    let day = ("0" + today.getDate()).slice(-2);
+    // current month
+    let month = ("0" + (today.getMonth() + 1)).slice(-2);
+    // current year
+    let year = today.getFullYear();
+
+    axios
+        .get(AMAZON_WORKOUT_DAILY_API_URL + year + '-' + month + '-' + day)
+        .then(result => {
+            result.data.forEach((element => {
+              global.dailyWorkoutList.set(element.id, element);
+            }));  
+            res.status(200).json(result.data);
+        })
+        .catch(error => {
+            console.log('Error fetching curent workout  . . .\n'+error);
+            res.status(500).json('Error fetching curent workout  . . .\n'+error);
+        });    
+
+};
