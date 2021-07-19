@@ -74,6 +74,15 @@ function closeOverlay() {
   document.getElementById("overlay").style.display = "none";
 }
 
+function formatDateParam(param) {
+
+    if(param<=9) {
+        return '0'+param;        
+    } else {
+        return param;
+    }
+}
+
 function openOverlay() {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     $.ajax({
@@ -87,13 +96,18 @@ function openOverlay() {
                 $('#chooseWorkout').text('No workout available for today');
             }
             $.each(data, function(k, workout) {
-                workoutStartDate = new Date(workout.start_time);                
+                parsedWorkoutStartDate = Date.parse(workout.start_time);
+                workoutStartDate = new Date(parsedWorkoutStartDate);
+
                 $('#workoutContainer').append(
                     '<div class="card" onClick="setCurrentWorkout('+ workout.id+')">' +
                         '<div class="icon">' +
                             '<img src="images/trainer/'+workout.trainer.toLowerCase()+'.jpg" height="200">' +
                         '</div>' +
-                        '<p class="title">'+ workout.name+'<br><br>'+new Intl.DateTimeFormat('ro-RO', { dateStyle: 'short', timeStyle: 'short' }).format(workoutStartDate)+'</p>' +
+                        '<p class="title">VASILE '+ workout.name+'<br><br>'+
+                        formatDateParam(workoutStartDate.getDate()) + '/' + formatDateParam(workoutStartDate.getMonth()+1) + '/' + workoutStartDate.getFullYear() + ' '
+                        + formatDateParam(workoutStartDate.getUTCHours())+ ':' + formatDateParam(workoutStartDate.getUTCMinutes())
+                        +'</p>' +
                     '</div>'
                 );
             });
