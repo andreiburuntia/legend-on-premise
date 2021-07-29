@@ -104,7 +104,7 @@ function openOverlay() {
                         '<div class="icon">' +
                             '<img src="images/trainer/'+workout.trainer.toLowerCase()+'.jpg" height="200">' +
                         '</div>' +
-                        '<p class="title">VASILE '+ workout.name+'<br><br>'+
+                        '<p class="title">'+ workout.name+'<br><br>'+
                         formatDateParam(workoutStartDate.getDate()) + '/' + formatDateParam(workoutStartDate.getMonth()+1) + '/' + workoutStartDate.getFullYear() + ' '
                         + formatDateParam(workoutStartDate.getUTCHours())+ ':' + formatDateParam(workoutStartDate.getUTCMinutes())
                         +'</p>' +
